@@ -1,16 +1,31 @@
 /**
- * Dev server: serves GET /api/gamba-leaderboard (scraped from Gamba 6865, refreshed every 1 hour).
+ * Dev / prod server: serves GET /api/gamba-leaderboard (scraped from Gamba 6865, refreshed every 1 hour).
  * Run: node server/index.mjs
- * Vite proxies /api to this server in dev.
+ * In dev, Vite proxies /api to this server; in prod (Render) it's exposed directly.
  */
 
 import { createServer } from "http";
+import { exec } from "child_process";
 import { scrapeGambaLeaderboard } from "./scrape-gamba.mjs";
 
 const PORT = Number(process.env.GAMBA_SERVER_PORT) || 3001;
 const REFRESH_MS = 60 * 60 * 1000; // 1 hour
 
 let cache = { entries: [], updatedAt: null, error: null };
+
+function ensureChrome() {
+  return new Promise((resolve) => {
+    // Install Chrome in the *runtime* container so Puppeteer can find it.
+    exec("npx puppeteer browsers install chrome", { cwd: process.cwd() }, (err) => {
+      if (err) {
+        console.error("[gamba] Chrome install failed (continuing):", err.message);
+      } else {
+        console.log("[gamba] Chrome installed for Puppeteer.");
+      }
+      resolve();
+    });
+  });
+}
 
 async function refresh() {
   try {
@@ -45,10 +60,14 @@ const server = createServer(async (req, res) => {
   res.end();
 });
 
-// Initial scrape and then every hour
-refresh();
-setInterval(refresh, REFRESH_MS);
+// Ensure Chrome exists in runtime, then start scraping + server
+ensureChrome().then(() => {
+  refresh();
+  setInterval(refresh, REFRESH_MS);
 
-server.listen(PORT, () => {
-  console.log(`[gamba] API listening on http://localhost:${PORT} (GET /api/gamba-leaderboard, refresh every 1h)`);
+  server.listen(PORT, () => {
+    console.log(
+      `[gamba] API listening on http://localhost:${PORT} (GET /api/gamba-leaderboard, refresh every 1h)`
+    );
+  });
 });
