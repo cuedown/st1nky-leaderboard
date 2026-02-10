@@ -16,8 +16,13 @@ function LeaderboardSectionComponent() {
   const showCountdown = SITE.promoEndDate != null;
 
   return (
-    <section id="leaderboard" className="scroll-mt-20 px-4 py-16 md:py-20" style={{ background: "var(--color-canvas)" }}>
-      <div className="mx-auto max-w-4xl">
+    <section id="leaderboard" className="relative scroll-mt-20 px-4 py-16 md:py-20" style={{ background: "var(--color-canvas)" }}>
+      <img
+        src="/shark-modal-bite.png"
+        alt=""
+        className="pointer-events-none absolute -top-10 right-3 h-28 w-28 md:h-36 md:w-36 select-none"
+      />
+      <div className="relative mx-auto max-w-4xl">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-block text-2xl font-normal tracking-wide text-[var(--color-text-strong)] md:text-3xl lg:text-4xl">
