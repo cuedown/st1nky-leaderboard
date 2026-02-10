@@ -5,16 +5,19 @@ import { SITE } from "../../config/site";
 function HeroComponent() {
   return (
     <section
-      className="relative overflow-hidden px-4 py-16 md:py-24"
+      className="relative overflow-hidden px-4 py-10 md:py-14"
       style={{
-        background:
-          "radial-gradient(circle at top left, rgba(250, 204, 21, 0.18), transparent 55%), radial-gradient(circle at bottom right, rgba(56,189,248,0.22), transparent 55%), #140b06",
+        backgroundImage: "url('/shark-banner.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Splashy background blobs to match the shark brand */}
-      <div className="pointer-events-none absolute inset-0 opacity-25">
-        <div className="absolute -left-24 -top-10 h-64 w-64 rounded-full bg-[rgba(250,204,21,0.35)] blur-3xl" />
-        <div className="absolute right-[-40px] top-10 h-72 w-72 rounded-full bg-[rgba(56,189,248,0.45)] blur-3xl" />
+      {/* Dark overlay + blobs for readability */}
+      <div className="pointer-events-none absolute inset-0 bg-[rgba(0,0,0,0.55)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-30">
+        <div className="absolute -left-24 -top-10 h-64 w-64 rounded-full bg-[rgba(250,204,21,0.4)] blur-3xl" />
+        <div className="absolute right-[-40px] top-10 h-72 w-72 rounded-full bg-[rgba(56,189,248,0.55)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-10 md:flex-row md:items-stretch">

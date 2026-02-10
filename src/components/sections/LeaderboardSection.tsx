@@ -1,24 +1,20 @@
 import { SITE } from "../../config/site";
 import { useGambaLeaderboard } from "../../hooks/useGambaLeaderboard";
-import { useLeaderboardData } from "../../hooks/useLeaderboardData";
 import { LeaderboardTable } from "../LeaderboardTable";
 import { Countdown } from "../Countdown";
 
 function LeaderboardSectionComponent() {
   const gamba = useGambaLeaderboard();
-  const fallback = useLeaderboardData("daily");
-
-  const fromGamba = gamba.entries.length > 0;
-  const entries = fromGamba ? gamba.entries : fallback.entries;
-  const loading = fromGamba ? gamba.loading : fallback.loading;
-  const error = fromGamba ? gamba.error : fallback.error;
+  const entries = gamba.entries;
+  const loading = gamba.loading;
+  const error = gamba.error;
 
   const showCountdown = SITE.promoEndDate != null;
 
   return (
-    <section id="leaderboard" className="relative scroll-mt-20 px-4 py-16 md:py-20" style={{ background: "var(--color-canvas)" }}>
+    <section id="leaderboard" className="relative scroll-mt-20 px-4 py-12 md:py-16" style={{ background: "var(--color-canvas)" }}>
       <img
-        src="/shark-modal-bite.png"
+        src="/shark-bite.png"
         alt=""
         className="pointer-events-none absolute -top-10 right-3 h-28 w-28 md:h-36 md:w-36 select-none"
       />
@@ -32,7 +28,7 @@ function LeaderboardSectionComponent() {
               at <span className="font-medium text-[var(--color-accent)]">Gamba.com</span>
               {" · "}
               <span className="text-[var(--color-text)]">Hosted by {SITE.streamerName}</span>
-              {fromGamba && gamba.updatedAt && (
+              {gamba.updatedAt && (
                 <span className="ml-1 text-[var(--color-muted)]">
                   · Updated {new Date(gamba.updatedAt).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" })}
                 </span>
@@ -65,7 +61,7 @@ function LeaderboardSectionComponent() {
           </a>
         </div>
 
-        {error && !fromGamba && (
+        {error && (
           <div
             className="mb-4 rounded-[var(--radius-card)] border border-[var(--color-down)] px-4 py-3 text-sm text-[var(--color-down)]"
             style={{ backgroundColor: "rgba(239,68,68,0.1)" }}
@@ -75,22 +71,18 @@ function LeaderboardSectionComponent() {
           </div>
         )}
 
-        {fromGamba ? (
-          <p className="mb-3 text-xs text-[var(--color-muted)]">
-            Data pulled from Gamba once per hour. Live rankings and timer:{" "}
-            <a href={SITE.gambaLeaderboard6865Url} target="_blank" rel="noopener noreferrer" className="font-medium text-[var(--color-accent)] hover:underline">
-              Gamba.com/promotions/exclusive-leaderboards/6865
-            </a>
-          </p>
-        ) : (
-          <p className="mb-3 text-xs text-[var(--color-muted)]">
-            Start the scraper server for live data: <code className="rounded bg-[var(--color-surface)] px-1">node server/index.mjs</code>
-            {" · "}
-            <a href={SITE.gambaLeaderboard6865Url} target="_blank" rel="noopener noreferrer" className="font-medium text-[var(--color-accent)] hover:underline">
-              View on Gamba
-            </a>
-          </p>
-        )}
+        <p className="mb-3 text-xs text-[var(--color-muted)]">
+          Live data from{" "}
+          <a
+            href={SITE.gambaLeaderboard6865Url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-[var(--color-accent)] hover:underline"
+          >
+            Gamba 2026SENDER leaderboard
+          </a>
+          . Updates every hour.
+        </p>
 
         <LeaderboardTable entries={entries} loading={loading} height={520} />
       </div>

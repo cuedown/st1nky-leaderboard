@@ -32,7 +32,7 @@ function TableHeader() {
   );
 }
 
-function LeaderboardTableComponent({ entries, loading, height = 500 }: LeaderboardTableProps) {
+function LeaderboardTableComponent({ entries, loading, height = 420 }: LeaderboardTableProps) {
   const Row = useCallback(
     ({
       index,
