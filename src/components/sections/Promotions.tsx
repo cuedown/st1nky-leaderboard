@@ -50,6 +50,10 @@ const PROMOS: Promo[] = [
   },
 ];
 
+function hasLinks(p: Promo): p is PromoWithLinks {
+  return Array.isArray((p as PromoWithLinks).links);
+}
+
 function PromotionsComponent() {
   return (
     <section id="promotions" className="scroll-mt-20 px-4 py-16 md:py-20" style={{ background: "var(--color-surface)" }}>
@@ -74,7 +78,7 @@ function PromotionsComponent() {
               </span>
               <h3 className="font-display text-xl font-bold tracking-wide text-[var(--color-text-strong)]">{p.title}</h3>
               <p className="mt-2 flex-1 text-sm text-[var(--color-muted)]">{p.description}</p>
-              {"links" in p ? (
+              {hasLinks(p) ? (
                 <div className="mt-4 flex flex-wrap gap-2">
                   {p.links.map((link) => (
                     <a
