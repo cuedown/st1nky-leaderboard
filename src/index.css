@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* St1nkyP3te PFP theme – bright oranges, black, yellow/gold (flashy but not eye-strain) */
+@theme {
+  /* Black base – matches PFP outline, keeps orange from overwhelming */
+  --color-canvas: #0a0a0a;
+  --color-surface: #111111;
+  --color-surface-elevated: #181818;
+  --color-surface-panel: #1f1f1f;
+  --color-border: #2a2a2a;
+  --color-border-light: rgba(255, 255, 255, 0.08);
+  /* Muted gray */
+  --color-muted: #9ca3af;
+  --color-muted-hover: #d1d5db;
+  --color-text: #e5e5e5;
+  --color-text-strong: #ffffff;
+  /* Primary: bright orange (PFP glow / miner energy) – used for CTAs, links, live */
+  --color-accent: #f97316;
+  --color-accent-dim: #ea580c;
+  /* Gold/yellow (PFP coin, radial burst) – secondary highlight, sparingly */
+  --color-gold: #eab308;
+  --color-gold-dim: #ca8a04;
+  --color-up: #22c55e;
+  --color-down: #ef4444;
+  --color-live: #f97316;
+
+  /* Fonts – blocky/bubbly display for headlines, professional but fun */
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Righteous", "Bebas Neue", system-ui, sans-serif;
+  --font-block: "Bebas Neue", "Righteous", system-ui, sans-serif;
+
+  /* Spacing */
+  --spacing-table-cell: 0.75rem 1rem;
+  --radius-card: 12px;
+  --radius-badge: 6px;
+
+  /* Transitions */
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-text);
+}
+
+/* Rank change flash animations */
+@keyframes flash-up {
+  0% { background-color: rgba(34, 197, 94, 0.35); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-down {
+  0% { background-color: rgba(239, 68, 68, 0.35); }
+  100% { background-color: transparent; }
+}
+
+.animate-flash-up {
+  animation: flash-up var(--duration-slow) var(--ease-default) forwards;
+}
+
+.animate-flash-down {
+  animation: flash-down var(--duration-slow) var(--ease-default) forwards;
+}
+
+/* Display type – big blocky/bubbly headlines that pop */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+.font-block {
+  font-family: var(--font-block);
+  letter-spacing: 0.03em;
+}
