@@ -7,17 +7,17 @@ function HeroComponent() {
     <section
       className="relative overflow-hidden px-4 py-16 md:py-24"
       style={{
-        backgroundColor: "#140b06",
+        background:
+          \"radial-gradient(circle at top left, rgba(250, 204, 21, 0.18), transparent 55%), radial-gradient(circle at bottom right, rgba(56,189,248,0.22), transparent 55%), #140b06\",
       }}
     >
-      {/* Hero shark banner */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-90"
-        style={{ backgroundImage: "url('/hero-shark-banner.png')" }}
-        aria-hidden="true"
-      />
+      {/* Splashy background blobs to match the shark brand */}
+      <div className=\"pointer-events-none absolute inset-0 opacity-25\">
+        <div className=\"absolute -left-24 -top-10 h-64 w-64 rounded-full bg-[rgba(250,204,21,0.35)] blur-3xl\" />
+        <div className=\"absolute right-[-40px] top-10 h-72 w-72 rounded-full bg-[rgba(56,189,248,0.45)] blur-3xl\" />
+      </div>
 
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-10 md:flex-row md:items-stretch">
+      <div className=\"relative mx-auto flex max-w-5xl flex-col items-center gap-10 md:flex-row md:items-stretch\">
         {/* Left: PFP + goofy card */}
         <div className="flex w-full flex-1 flex-col items-center md:items-start">
           <div className="relative mb-4 rounded-[20px] border border-[rgba(255,255,255,0.1)] bg-[rgba(15,10,6,0.85)] px-6 py-5 shadow-[0_0_45px_rgba(0,0,0,0.9)] md:px-7 md:py-6">
@@ -75,25 +75,29 @@ function HeroComponent() {
           </p>
         </div>
 
-        {/* Right: goofy shark / leaderboard tease card */}
-        <div className="w-full max-w-sm flex-1">
-          <div className="relative overflow-hidden rounded-[24px] border border-[rgba(255,255,255,0.08)] bg-gradient-to-br from-[rgba(15,23,42,0.95)] via-[rgba(30,64,175,0.9)] to-[rgba(8,47,73,0.95)] p-5 shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full bg-[rgba(15,23,42,0.9)] px-3 py-1 text-xs font-semibold text-sky-300">
-                🏁 2026SENDER
-              </span>
-              <span className="text-xs text-[var(--color-muted)]">Live leaderboard</span>
+        {/* Right: shark / leaderboard tease card using bold shapes */}
+        <div className=\"w-full max-w-sm flex-1\">
+          <div className=\"relative overflow-hidden rounded-[26px] border border-[rgba(255,255,255,0.12)] bg-gradient-to-br from-[rgba(15,23,42,0.96)] via-[rgba(30,64,175,0.9)] to-[rgba(8,47,73,0.96)] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.9)]\">
+            <div className=\"absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-tr from-sky-400 via-sky-300 to-sky-200 opacity-80 blur-xl\" />
+            <div className=\"absolute -bottom-16 -left-12 h-40 w-40 rotate-12 rounded-[999px] border-4 border-[rgba(250,204,21,0.8)] opacity-30\" />
+
+            <div className=\"relative mb-4 inline-flex items-center gap-2 rounded-full bg-[rgba(15,23,42,0.9)] px-3 py-1 text-xs font-semibold tracking-wide text-sky-200\">
+              <span>🏁</span>
+              <span>2026SENDER LEADERBOARD</span>
             </div>
-            <p className="font-display text-lg font-semibold text-white">Win by being the biggest degen.</p>
-            <p className="mt-1 text-xs text-sky-100">
-              Top 10 wagerers share the pot. Your wagers on Gamba.com update this board in real time.
+
+            <p className=\"relative font-display text-xl font-semibold leading-tight text-white\">
+              Win by sending it harder than everyone else.
             </p>
-            <div className="mt-4 rounded-2xl bg-[rgba(15,23,42,0.9)] px-4 py-3 text-xs text-[var(--color-muted)]">
-              <p>
-                <span className="font-semibold text-sky-300">Shark tip:</span> you don&apos;t need to be VIP Diamond to
-                hit rank #1.
+            <p className=\"relative mt-2 text-xs text-sky-100\">
+              Your Gamba wagers power this board. Any account can spike to #1 if they go on a heater.
+            </p>
+
+            <div className=\"relative mt-4 rounded-2xl border border-[rgba(15,23,42,0.8)] bg-[rgba(15,23,42,0.9)] px-4 py-3 text-xs text-[var(--color-muted)]\">
+              <p className=\"font-semibold text-sky-300\">Shark tip:</p>
+              <p className=\"mt-1\">
+                Leaderboard updates every hour. One insane bonus can turn a minnow into a monster.
               </p>
-              <p className="mt-1">Any account can climb if they send enough wager volume.</p>
             </div>
           </div>
         </div>

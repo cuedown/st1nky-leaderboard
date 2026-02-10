@@ -121,9 +121,10 @@ async function fetchWithPuppeteer() {
   const mod = await import("puppeteer").catch(() => null);
   if (!mod) throw new Error("puppeteer not installed; run: npm install puppeteer");
   const puppeteer = mod.default;
+  const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: puppeteer.executablePath(), // use installed Chrome from Puppeteer cache (/opt/render/.cache/puppeteer)
+    executablePath,
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--window-size=1280,900"],
   });
   try {
