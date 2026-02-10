@@ -5,6 +5,7 @@
  */
 
 import type { LeaderboardEntry, LeaderboardPeriod, LeaderboardResponse } from "../types/leaderboard";
+import { SITE } from "../config/site";
 
 const GAMBA_CACHE_KEY = "gamba_6865_cache";
 const GAMBA_CACHE_TTL_MS = 55 * 60 * 1000; // 55 min (under 1h refresh)
@@ -18,19 +19,42 @@ export interface GambaLeaderboardResponse {
 
 function getApiBase(): string {
   if (typeof window === "undefined") return "http://localhost:5173";
-  return (import.meta as any).env?.VITE_API_BASE_URL || window.location.origin;
+  // Prefer explicit Render API base if provided at build time; otherwise fall back to current origin.
+  const envBase = (import.meta as any).env?.VITE_API_BASE_URL as string | undefined;
+  return envBase || window.location.origin;
 }
 
 export async function fetchGambaLeaderboard(): Promise<GambaLeaderboardResponse> {
-  const base = getApiBase();
+  const primaryBase = getApiBase();
+  const fallbackBase = SITE.gambaUrl.startsWith("http")
+    ? new URL(SITE.gambaUrl).origin.replace("https://gamba.com", "https://st1nky-leaderboard.onrender.com")
+    : "https://st1nky-leaderboard.onrender.com";
   const cached = getGambaCached();
   if (cached) return cached;
   try {
-    const res = await fetch(`${base}/api/gamba-leaderboard`);
-    const data: GambaLeaderboardResponse = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-    if (data.entries?.length) setGambaCached(data);
-    return data;
+    const bases = [primaryBase, fallbackBase].filter(
+      (b, idx, arr) => b && arr.indexOf(b) === idx
+    ) as string[];
+
+    let lastError: unknown;
+    for (const base of bases) {
+      try {
+        const res = await fetch(`${base.replace(/\/$/, "")}/api/gamba-leaderboard`);
+        const data: GambaLeaderboardResponse = await res.json();
+        if (!res.ok) {
+          lastError = data?.error || `HTTP ${res.status}`;
+          continue;
+        }
+        if (data.entries?.length) {
+          setGambaCached(data);
+        }
+        return data;
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    throw lastError ?? new Error("Unable to reach Gamba leaderboard API");
   } catch (e) {
     return {
       entries: [],
