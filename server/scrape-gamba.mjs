@@ -118,10 +118,12 @@ function parseLeaderboardFromHtml(html) {
  * Closes the "Custom Wager Contribution" modal (X top-right) so the full leaderboard is visible.
  */
 async function fetchWithPuppeteer() {
-  const puppeteer = await import("puppeteer").catch(() => null);
-  if (!puppeteer) throw new Error("puppeteer not installed; run: npm install puppeteer");
-  const browser = await puppeteer.default.launch({
+  const mod = await import("puppeteer").catch(() => null);
+  if (!mod) throw new Error("puppeteer not installed; run: npm install puppeteer");
+  const puppeteer = mod.default;
+  const browser = await puppeteer.launch({
     headless: true,
+    executablePath: puppeteer.executablePath(), // use installed Chrome from Puppeteer cache (/opt/render/.cache/puppeteer)
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--window-size=1280,900"],
   });
   try {
