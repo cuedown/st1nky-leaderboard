@@ -2,12 +2,35 @@ import { memo } from "react";
 
 import { SITE } from "../../config/site";
 
-const PROMOS = [
+type PromoBase = {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  accent?: boolean;
+};
+
+type PromoWithHref = PromoBase & {
+  href: string;
+  cta: string;
+  links?: undefined;
+};
+
+type PromoWithLinks = PromoBase & {
+  links: { id: string; label: string; href: string }[];
+  href?: undefined;
+  cta?: undefined;
+};
+
+type Promo = PromoWithHref | PromoWithLinks;
+
+const PROMOS: Promo[] = [
   {
     id: "2026sender",
     title: "2026SENDER",
     subtitle: "Exclusive race at Gamba.com",
-    description: "Place bets, rise through the wager leaderboard, and claim your prize. Join the exclusive race and win big.",
+    description:
+      "Place bets, rise through the wager leaderboard, and claim your prize. Join the exclusive race and win big.",
     cta: "Join the race",
     href: SITE.gambaLeaderboard6865Url,
     accent: true,
@@ -16,9 +39,10 @@ const PROMOS = [
     id: "community",
     title: "Join the St1nky Gang",
     subtitle: "Kick, X & Discord",
-    description: "Hang out with Pete live, catch bonus hunts, and never miss a code drop across all socials.",
+    description:
+      "Hang out with Pete live, catch bonus hunts, and never miss a code drop across all socials.",
     links: [
-      { id: "kick", label: "Watch on Kick", href: SITE.gambaUrl },
+      { id: "kick", label: "Watch on Kick", href: SITE.kickChannelUrl },
       { id: "twitter", label: "Follow on X", href: "https://x.com/ST1NKYP3TE" },
       { id: "discord", label: "Join Discord", href: "https://discord.gg/4Q4HfXEW" },
     ],
