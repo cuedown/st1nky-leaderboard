@@ -37,7 +37,7 @@ function ScoreCardComponent({ entry, style }: ScoreCardProps) {
         #{entry.rank}
       </div>
       <div className="flex items-center justify-center">
-        <div className="relative h-10 w-10">
+        <div className="flex items-center gap-1.5">
           <img
             src={entry.avatarUrl}
             alt=""
@@ -50,9 +50,9 @@ function ScoreCardComponent({ entry, style }: ScoreCardProps) {
             <img
               src={entry.badgeUrl}
               alt=""
-              width={20}
-              height={20}
-              className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-[var(--color-surface)] object-contain"
+              width={18}
+              height={18}
+              className="h-4.5 w-4.5 rounded-full bg-[var(--color-surface)] object-contain"
               loading="lazy"
             />
           )}

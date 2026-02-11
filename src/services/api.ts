@@ -16,8 +16,13 @@ export interface GambaLeaderboardResponse {
   error?: string;
 }
 
+function getApiBase(): string {
+  if (typeof window === "undefined") return "http://localhost:5173";
+  return (import.meta as any).env?.VITE_API_BASE_URL || window.location.origin;
+}
+
 export async function fetchGambaLeaderboard(): Promise<GambaLeaderboardResponse> {
-  const base = typeof window !== "undefined" ? window.location.origin : "http://localhost:5173";
+  const base = getApiBase();
   const cached = getGambaCached();
   if (cached) return cached;
   try {
@@ -59,9 +64,7 @@ const CACHE_KEY = "leaderboard_cache";
 const CACHE_TTL_MS = 60_000; // 1 min
 
 function getBaseUrl(): string {
-  return typeof window !== "undefined"
-    ? `${window.location.origin}`
-    : "http://localhost:5173";
+  return getApiBase();
 }
 
 export async function fetchLeaderboard(
