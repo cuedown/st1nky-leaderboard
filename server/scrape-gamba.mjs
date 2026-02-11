@@ -131,7 +131,8 @@ async function fetchWithPuppeteer() {
     await page.setViewport({ width: 1280, height: 900 });
     await page.setUserAgent(USER_AGENT);
     await page.setExtraHTTPHeaders({ "Accept-Language": "en-US,en;q=0.9" });
-    await page.goto(GAMBA_6865_URL, { waitUntil: "networkidle2", timeout: 25000 });
+    page.setDefaultNavigationTimeout(60000);
+    await page.goto(GAMBA_6865_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
     await new Promise((r) => setTimeout(r, 3000));
 
     // Wait for modal to appear, then click X (top-right close)
